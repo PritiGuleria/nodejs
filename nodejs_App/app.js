@@ -4,10 +4,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
+var db = require('./db/connectMongo');
 var index = require('./routes/index');
-
-
 var app = express();
 
 
@@ -19,7 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+
+//Show the index.html when requested
+app.get('/',function(req,res){
+
+    res.sendFile(path.join(__dirname+'/public/app/views/index.html'));
+})
+
 
 
 // catch 404 and forward to error handler
